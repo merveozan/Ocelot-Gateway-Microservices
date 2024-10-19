@@ -1,0 +1,196 @@
+
+// DownstreamPathTemplate => İstekde bulunulacak Api Url bilgisi
+// DownstreamScheme => İstekde bulunulacak Api'nin protokolü
+// DownstreamHostAndPorts => İstekde bulunulacak Api'nin Host ve Port bilgileri
+// UpstreamPathTemplate => Gateway üzerinden istekde bulunulacak Api Url bilgisi
+// UpstreamHttpMethod => İstekde bulunulacak Api Method bilgisi
+
+
+
+
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/Account",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44300
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Account",
+      "UpstreamHttpMethod": [ "POST" ]
+      /*"HttpHandlerOptions": {
+        "UseTracing": true
+      }*/
+    },
+    {
+      // Customer Web Api
+      // https://localhost:44314/api/Customer
+      // Customer API için GET, POST, PUT metodlarıyla tüm customer'ları listeleme, ekleme, güncelleme işlemleri
+      "DownstreamPathTemplate": "/api/Customer",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44314
+        },
+        {
+          "Host": "localhost",
+          "Port": 44353
+        }
+
+      ],
+      "UpstreamPathTemplate": "/api/Customer",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+
+      /*"HttpHandlerOptions": {
+        "UseTracing": true
+      },*/
+
+      // Load Balancer 3'e ayrııyor => 1. Round Robin istekleri sırayla services lara iletir 1, 2, 3, 1, 2, 3
+      //                            => 2. Least Connection en az yoğun olan servise isteği iletir
+      //                            => 3. User a özel load balancer da aynı kişiler hep aynı servise iletiliyor (blgileri o serviste cache lendiği için)
+
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+
+      },
+
+      "FileCacheOptions": {
+        "TtlSeconds": 60 // Yanıt 60 saniye boyunca cache'te tutulur
+      },
+      // QAS and Polly
+      /* "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 5,
+        "DurationOfBreak": 2000,
+        "TimeoutValue": 7000
+      },*/
+      "Key": "CustomerAPI"
+    },
+    {
+      // https://localhost:44314/api/Customer/{customerId}
+      // Customer API için GET, DELETE metodlarıyla belirli bir customer'ı id'ye göre işlemleri
+      "DownstreamPathTemplate": "/api/Customer/{customerId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44314
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Customer/{customerId}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ],
+      "HttpHandlerOptions": {
+        "UseTracing": true
+      },
+      "Key": "CustomerByIdAPI"
+    },
+    {
+      // Order Web Api
+      // https://localhost:44338/api/Order
+      // Order API için GET, POST, PUT metodlarıyla tüm order'ları listeleme ve ekleme işlemleri
+      "DownstreamPathTemplate": "/api/Order",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44338
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Order",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "Key": "OrderAPI",
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "PeriodTimespan": 1,
+        "Limit": 1
+      }
+    },
+    {
+      // https://localhost:44338/api/Order/{orderId}
+      // Order API için GET, DELETE metodlarıyla belirli bir order'ı id'ye göre işlemleri
+      "DownstreamPathTemplate": "/api/Order/{orderId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44338
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Order/{orderId}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ],
+      "Key": "OrderByIdAPI"
+    },
+    {
+      // Product Web Api
+      // https://localhost:44329/api/Product
+      // Product API için GET, POST, PUT metodlarıyla tüm product'ları listeleme ve ekleme işlemleri
+      "DownstreamPathTemplate": "/api/Product",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44329
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Product",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "Key": "ProductAPI",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "Role": "Admin"
+      }
+    },
+    {
+      // https://localhost:44329/api/Product/{productId}
+      // Product API için GET, DELETE metodlarıyla belirli bir product'ı id'ye göre işlemleri
+      "DownstreamPathTemplate": "/api/Product/{productId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44329
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Product/{productId}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ],
+      "Key": "ProductByIdAPI"
+    }
+  ],
+  "Aggregates": [
+    {
+      // Customer ve Product API'lerini birleştirerek tek bir endpoint'te yanıt alabilme
+      "RouteKeys": [
+        "CustomerAPI",
+        "OrderAPI"
+      ],
+      "UpstreamPathTemplate": "/api/CustomerAndOrder",
+      "UpstreamHttpMethod": [ "GET" ]
+
+    }
+  ],
+  "GlobalConfiguration": {
+    // API Gateway'in çalışacağı global ayarlar (örn: local server üzerindeki port)
+    "BaseUrl": "https://localhost:44375"
+
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Trace",
+      "Microsoft": "Warning",
+      "Ocelot": "Trace"
+    }
+    /*"QoSOptions": {
+      "ExceptionsAllowedBeforeBreaking": 5,
+      "DurationOfBreak": 2000,
+      "TimeoutValue": 7000
+    }*/
+  }
+}
