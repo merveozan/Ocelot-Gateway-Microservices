@@ -1,9 +1,9 @@
-﻿using JwtAuthenticationManager;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Ocelot.Cache.CacheManager;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
-using Ocelot.Provider.Polly;
-//using Ocelot.Tracing.Butterfly;
-//using Butterfly.OpenTracing;  // Butterfly entegrasyonu
+using System.Text;
 
 namespace ApiGateway
 {
@@ -18,37 +18,41 @@ namespace ApiGateway
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // Configure authentication parameters
+            var identityUrl = Configuration.GetValue<string>("IdentityUrl");
+            var secretKey = Configuration["JwtSettings:SecretKey"];
+            var issuer = Configuration["JwtSettings:Issuer"];
+            var audience = Configuration["JwtSettings:Audience"];
 
-            services.AddOcelot();
+
+            var key = Encoding.ASCII.GetBytes(secretKey);
+
+            services.AddAuthentication(options =>
+             {
+                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+             }).AddJwtBearer("IdentityApiKey", options =>  {
+                    //options.Authority = identityUrl;
+                    options.RequireHttpsMetadata = false; 
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = true,
+                        ValidIssuer = issuer,
+                        ValidateAudience = true,
+                        ValidAudience = audience,
+
+                    };
+                });
+            services.AddSignalR();
+            services.AddOcelot()
+                .AddCacheManager(settings => settings.WithDictionaryHandle()); // Memory-based caching
+
             services.AddControllers();
-            services.AddCustomJwtAuthentication();
-
-
-            //Eğer sunucu belirli bir süre cevap vermezse o sunucuyu kapatıyor
-           // services.AddOcelot().AddPolly();
-            // CacheManager'i MemoryCache ile entegre ediyoruz
-            services.AddCacheManager<object>(settings =>
-            {
-                settings.WithDictionaryHandle();  // Memory-based cache işlemi
-            });
-
-            /*
-            services
-            .AddOcelot()
-            // This comes from Ocelot.Tracing.Butterfly package
-            .AddButterfly(option =>
-            {
-                // This is the URL that the Butterfly collector server is running on...
-                option.CollectorUrl = "http://localhost:9618";
-                option.Service = "Ocelot";
-            });*/
-
-
-
-
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -59,13 +63,7 @@ namespace ApiGateway
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseOcelot();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseOcelot(); 
         }
     }
-
 }

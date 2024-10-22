@@ -1,15 +1,23 @@
-
-// DownstreamPathTemplate => İstekde bulunulacak Api Url bilgisi
-// DownstreamScheme => İstekde bulunulacak Api'nin protokolü
-// DownstreamHostAndPorts => İstekde bulunulacak Api'nin Host ve Port bilgileri
-// UpstreamPathTemplate => Gateway üzerinden istekde bulunulacak Api Url bilgisi
-// UpstreamHttpMethod => İstekde bulunulacak Api Method bilgisi
-
-
-
-
 {
+  "_comment1": "DownstreamPathTemplate => The API URL to which the request will be forwarded",
+  "_comment2": "DownstreamScheme => The protocol of the downstream API",
+  "_comment3": "DownstreamHostAndPorts => Host and Port information of the downstream API",
+  "_comment4": "UpstreamPathTemplate => The API URL through which the request will be made via the Gateway",
+  "_comment5": "UpstreamHttpMethod => The HTTP method(s) allowed for the request",
+
   "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/Auth",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44307
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Auth",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
     {
       "DownstreamPathTemplate": "/api/Account",
       "DownstreamScheme": "https",
@@ -21,14 +29,10 @@
       ],
       "UpstreamPathTemplate": "/api/Account",
       "UpstreamHttpMethod": [ "POST" ]
-      /*"HttpHandlerOptions": {
-        "UseTracing": true
-      }*/
     },
     {
-      // Customer Web Api
-      // https://localhost:44314/api/Customer
-      // Customer API için GET, POST, PUT metodlarıyla tüm customer'ları listeleme, ekleme, güncelleme işlemleri
+      "_comment": "Customer Web API",
+      "_comment_details": "Handles listing, adding, and updating customers using GET, POST, PUT methods",
       "DownstreamPathTemplate": "/api/Customer",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -40,38 +44,28 @@
           "Host": "localhost",
           "Port": 44353
         }
-
       ],
       "UpstreamPathTemplate": "/api/Customer",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
 
-      /*"HttpHandlerOptions": {
-        "UseTracing": true
-      },*/
-
-      // Load Balancer 3'e ayrııyor => 1. Round Robin istekleri sırayla services lara iletir 1, 2, 3, 1, 2, 3
-      //                            => 2. Least Connection en az yoğun olan servise isteği iletir
-      //                            => 3. User a özel load balancer da aynı kişiler hep aynı servise iletiliyor (blgileri o serviste cache lendiği için)
+      "_comment_load_balancer": "Load Balancer splits into 3 strategies:",
+      "_comment_strategy1": "1. Round Robin - Sends requests to services in sequence (1, 2, 3, 1, 2, 3)",
+      "_comment_strategy2": "2. Least Connection - Sends requests to the least busy service",
+      "_comment_strategy3": "3. User-specific load balancer - Same users are always sent to the same service (because their data is cached on that service)",
 
       "LoadBalancerOptions": {
         "Type": "RoundRobin"
-
       },
 
       "FileCacheOptions": {
-        "TtlSeconds": 60 // Yanıt 60 saniye boyunca cache'te tutulur
+        "_comment": "Response is cached for 60 seconds",
+        "TtlSeconds": 60
       },
-      // QAS and Polly
-      /* "QoSOptions": {
-        "ExceptionsAllowedBeforeBreaking": 5,
-        "DurationOfBreak": 2000,
-        "TimeoutValue": 7000
-      },*/
+
       "Key": "CustomerAPI"
     },
     {
-      // https://localhost:44314/api/Customer/{customerId}
-      // Customer API için GET, DELETE metodlarıyla belirli bir customer'ı id'ye göre işlemleri
+      "_comment": "Customer API for operations on a specific customer by ID using GET and DELETE methods",
       "DownstreamPathTemplate": "/api/Customer/{customerId}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -88,10 +82,9 @@
       "Key": "CustomerByIdAPI"
     },
     {
-      // Order Web Api
-      // https://localhost:44338/api/Order
-      // Order API için GET, POST, PUT metodlarıyla tüm order'ları listeleme ve ekleme işlemleri
-      "DownstreamPathTemplate": "/api/Order",
+      "_comment": "Order Web API",
+      "_comment_details": "Handles listing all orders and operations on specific orders using GET, POST, PUT, DELETE methods",
+      "DownstreamPathTemplate": "/api/Order?{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -99,8 +92,8 @@
           "Port": 44338
         }
       ],
-      "UpstreamPathTemplate": "/api/Order",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "UpstreamPathTemplate": "/api/Order?{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "Key": "OrderAPI",
       "RateLimitOptions": {
         "ClientWhitelist": [],
@@ -111,24 +104,8 @@
       }
     },
     {
-      // https://localhost:44338/api/Order/{orderId}
-      // Order API için GET, DELETE metodlarıyla belirli bir order'ı id'ye göre işlemleri
-      "DownstreamPathTemplate": "/api/Order/{orderId}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 44338
-        }
-      ],
-      "UpstreamPathTemplate": "/api/Order/{orderId}",
-      "UpstreamHttpMethod": [ "GET", "DELETE" ],
-      "Key": "OrderByIdAPI"
-    },
-    {
-      // Product Web Api
-      // https://localhost:44329/api/Product
-      // Product API için GET, POST, PUT metodlarıyla tüm product'ları listeleme ve ekleme işlemleri
+      "_comment": "Product Web API",
+      "_comment_details": "Handles listing, adding, and updating products using GET, POST, PUT methods",
       "DownstreamPathTemplate": "/api/Product",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -141,7 +118,7 @@
       "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
       "Key": "ProductAPI",
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
+        "AuthenticationProviderKey": "IdentityApiKey",
         "AllowedScopes": []
       },
       "RouteClaimsRequirement": {
@@ -149,8 +126,7 @@
       }
     },
     {
-      // https://localhost:44329/api/Product/{productId}
-      // Product API için GET, DELETE metodlarıyla belirli bir product'ı id'ye göre işlemleri
+      "_comment": "Product API for operations on a specific product by ID using GET and DELETE methods",
       "DownstreamPathTemplate": "/api/Product/{productId}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -166,20 +142,18 @@
   ],
   "Aggregates": [
     {
-      // Customer ve Product API'lerini birleştirerek tek bir endpoint'te yanıt alabilme
+      "_comment": "Combining Customer and Order APIs to get responses from a single endpoint",
       "RouteKeys": [
         "CustomerAPI",
         "OrderAPI"
       ],
       "UpstreamPathTemplate": "/api/CustomerAndOrder",
       "UpstreamHttpMethod": [ "GET" ]
-
     }
   ],
   "GlobalConfiguration": {
-    // API Gateway'in çalışacağı global ayarlar (örn: local server üzerindeki port)
+    "_comment": "Global settings for the API Gateway (e.g., local server port)",
     "BaseUrl": "https://localhost:44375"
-
   },
   "Logging": {
     "LogLevel": {
@@ -187,10 +161,5 @@
       "Microsoft": "Warning",
       "Ocelot": "Trace"
     }
-    /*"QoSOptions": {
-      "ExceptionsAllowedBeforeBreaking": 5,
-      "DurationOfBreak": 2000,
-      "TimeoutValue": 7000
-    }*/
   }
 }

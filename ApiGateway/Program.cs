@@ -1,32 +1,32 @@
-﻿using ApiGateway;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+﻿
 
-public class Program
+namespace ApiGateway
 {
-    public static void Main(string[] args)
+    public class Program
     {
-        CreateHostBuilder(args).Build().Run();
-    }
+        public static void Main(string[] args)
+        {
+            CreateHostBuilder(args).Build().Run();
+        }
 
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.UseStartup<Startup>();
-            })
-            .ConfigureAppConfiguration((hostingContext, config) =>
-            {
-                // ocelot.json dosyasını Ocelot'un ayarları olarak ekliyoruz.
-                config.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
-            })
-            .ConfigureLogging((hostingContext, logging) =>
-            {
-                // Log sağlayıcılarını temizliyoruz ve loglama yapılandırmasını ekliyoruz.
-                logging.ClearProviders();
-                logging.AddConsole();  // Konsola loglama
-                logging.AddDebug();    // Debug penceresine loglama
-                logging.SetMinimumLevel(LogLevel.Debug);  // Minimum log seviyesi Debug olarak ayarlandı
-            });
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    // Add ocelot.json file as Ocelot's configuration
+                    config.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+                })
+                .ConfigureLogging((hostingContext, logging) =>
+                {
+                    // Clear default logging providers and add custom ones
+                    logging.ClearProviders();
+                    logging.AddConsole();
+                    logging.AddDebug();
+                    logging.SetMinimumLevel(LogLevel.Debug);
+                })
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
+    }
 }

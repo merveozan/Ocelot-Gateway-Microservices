@@ -73,3 +73,13 @@ C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\ApiGateway\bin\Debug\
 C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\ApiGateway\bin\Debug\net6.0\Butterfly.OpenTracing.dll
 C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\ApiGateway\bin\Debug\net6.0\MessagePack.dll
 C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\ApiGateway\bin\Debug\net6.0\Ocelot.Tracing.Butterfly.dll
+C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\ApiGateway\bin\Debug\net6.0\Microsoft.AspNetCore.Connections.Abstractions.dll
+C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\ApiGateway\bin\Debug\net6.0\Microsoft.AspNetCore.Http.Connections.Client.dll
+C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\ApiGateway\bin\Debug\net6.0\Microsoft.AspNetCore.Http.Connections.Common.dll
+C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\ApiGateway\bin\Debug\net6.0\Microsoft.AspNetCore.SignalR.Client.dll
+C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\ApiGateway\bin\Debug\net6.0\Microsoft.AspNetCore.SignalR.Client.Core.dll
+C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\ApiGateway\bin\Debug\net6.0\Microsoft.AspNetCore.SignalR.Common.dll
+C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\ApiGateway\bin\Debug\net6.0\Microsoft.AspNetCore.SignalR.Protocols.Json.dll
+C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\ApiGateway\bin\Debug\net6.0\Microsoft.Extensions.Features.dll
+C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\ApiGateway\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\ApiGateway\bin\Debug\net6.0\System.IO.Pipelines.dll
