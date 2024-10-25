@@ -6,6 +6,21 @@
   "_comment5": "UpstreamHttpMethod => The HTTP method(s) allowed for the request",
 
   "Routes": [
+
+    {
+      "DownstreamPathTemplate": "/ws", // Path to downstream WebSocket service
+      "DownstreamScheme": "wss", // Use 'wss' for secure WebSocket (WebSocket over HTTPS)
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost", // Host of the WebSocket server
+          "Port": 7283 // Port of the WebSocket server
+        }
+      ],
+      "UpstreamPathTemplate": "/ws", // Path on the gateway (API Gateway will listen on this path)
+      "UpstreamHttpMethod": [ "GET" ], // WebSocket connection method
+      "Key": "WebSocketService"
+    },
+
     {
       "DownstreamPathTemplate": "/api/Auth",
       "DownstreamScheme": "https",
@@ -16,19 +31,12 @@
         }
       ],
       "UpstreamPathTemplate": "/api/Auth",
-      "UpstreamHttpMethod": [ "POST" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/Account",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 44300
-        }
-      ],
-      "UpstreamPathTemplate": "/api/Account",
-      "UpstreamHttpMethod": [ "POST" ]
+      "UpstreamHttpMethod": [ "POST" ],
+      "FileCacheOptions": {
+        "_comment": "Response is cached for 20 seconds",
+        "TtlSeconds": 20,
+        "EnableContentHashing": true
+      }
     },
     {
       "_comment": "Customer Web API",
@@ -42,7 +50,7 @@
         },
         {
           "Host": "localhost",
-          "Port": 44353
+          "Port": 7181
         }
       ],
       "UpstreamPathTemplate": "/api/Customer",
@@ -56,12 +64,6 @@
       "LoadBalancerOptions": {
         "Type": "RoundRobin"
       },
-
-      "FileCacheOptions": {
-        "_comment": "Response is cached for 60 seconds",
-        "TtlSeconds": 60
-      },
-
       "Key": "CustomerAPI"
     },
     {
@@ -84,7 +86,7 @@
     {
       "_comment": "Order Web API",
       "_comment_details": "Handles listing all orders and operations on specific orders using GET, POST, PUT, DELETE methods",
-      "DownstreamPathTemplate": "/api/Order?{everything}",
+      "DownstreamPathTemplate": "/api/Order/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -92,8 +94,13 @@
           "Port": 44338
         }
       ],
-      "UpstreamPathTemplate": "/api/Order?{everything}",
+      "UpstreamPathTemplate": "/api/Order/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "FileCacheOptions": {
+        "_comment": "Response is cached for 20 seconds",
+        "TtlSeconds": 20,
+        "EnableContentHashing": true
+      },
       "Key": "OrderAPI",
       "RateLimitOptions": {
         "ClientWhitelist": [],
@@ -116,6 +123,11 @@
       ],
       "UpstreamPathTemplate": "/api/Product",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "FileCacheOptions": {
+        "_comment": "Response is cached for 20 seconds",
+        "TtlSeconds": 20,
+        "EnableContentHashing": true
+      },
       "Key": "ProductAPI",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "IdentityApiKey",
@@ -152,14 +164,15 @@
     }
   ],
   "GlobalConfiguration": {
-    "_comment": "Global settings for the API Gateway (e.g., local server port)",
-    "BaseUrl": "https://localhost:44375"
+    "_comment": "Global settings for the API Gateway ( local server port)",
+    "BaseUrl": "https://localhost:7000"
   },
   "Logging": {
     "LogLevel": {
       "Default": "Trace",
       "Microsoft": "Warning",
-      "Ocelot": "Trace"
+      "Ocelot": "Trace",
+      "Ocelot.Cache": "Debug"
     }
   }
 }

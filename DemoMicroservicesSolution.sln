@@ -15,13 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateWay", "ApiGateWay", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway", "ApiGateway\ApiGateway.csproj", "{416016D3-A036-4BA1-B5D6-ECC222C98B9D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JwtAuthenticationManager", "JwtAuthenticationManager\JwtAuthenticationManager.csproj", "{8B1C7A2C-63E9-4458-9BF9-D773986EBF65}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationWebApi", "AuthenticationWebApi\AuthenticationWebApi.csproj", "{743C573A-609B-48F6-99D8-3EDAAE1E8528}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerWebApi2", "CustomerWebApi2\CustomerWebApi2.csproj", "{DD9D5FE9-F3A8-45E2-A968-9B86D4FBCBED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServerApi", "IdentityServerApi\IdentityServerApi.csproj", "{53E1F65A-AAAE-4C23-BDB7-ECC1DEC619A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServerApi", "IdentityServerApi\IdentityServerApi.csproj", "{53E1F65A-AAAE-4C23-BDB7-ECC1DEC619A8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Websocket.Server", "Websocket.Server\Websocket.Server.csproj", "{12FD78B6-3B64-48AD-A344-47B71570D854}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebSocketsChatApp", "WebSocketsChatApp\WebSocketsChatApp.csproj", "{D8500A83-6FA5-4B2D-B0D8-05E39C2AAB94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,14 +45,6 @@ Global
 		{416016D3-A036-4BA1-B5D6-ECC222C98B9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{416016D3-A036-4BA1-B5D6-ECC222C98B9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{416016D3-A036-4BA1-B5D6-ECC222C98B9D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8B1C7A2C-63E9-4458-9BF9-D773986EBF65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8B1C7A2C-63E9-4458-9BF9-D773986EBF65}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8B1C7A2C-63E9-4458-9BF9-D773986EBF65}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8B1C7A2C-63E9-4458-9BF9-D773986EBF65}.Release|Any CPU.Build.0 = Release|Any CPU
-		{743C573A-609B-48F6-99D8-3EDAAE1E8528}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{743C573A-609B-48F6-99D8-3EDAAE1E8528}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{743C573A-609B-48F6-99D8-3EDAAE1E8528}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{743C573A-609B-48F6-99D8-3EDAAE1E8528}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DD9D5FE9-F3A8-45E2-A968-9B86D4FBCBED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DD9D5FE9-F3A8-45E2-A968-9B86D4FBCBED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD9D5FE9-F3A8-45E2-A968-9B86D4FBCBED}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -61,6 +53,14 @@ Global
 		{53E1F65A-AAAE-4C23-BDB7-ECC1DEC619A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53E1F65A-AAAE-4C23-BDB7-ECC1DEC619A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53E1F65A-AAAE-4C23-BDB7-ECC1DEC619A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12FD78B6-3B64-48AD-A344-47B71570D854}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12FD78B6-3B64-48AD-A344-47B71570D854}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12FD78B6-3B64-48AD-A344-47B71570D854}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12FD78B6-3B64-48AD-A344-47B71570D854}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8500A83-6FA5-4B2D-B0D8-05E39C2AAB94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8500A83-6FA5-4B2D-B0D8-05E39C2AAB94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8500A83-6FA5-4B2D-B0D8-05E39C2AAB94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8500A83-6FA5-4B2D-B0D8-05E39C2AAB94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

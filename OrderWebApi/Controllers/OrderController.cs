@@ -45,7 +45,7 @@ namespace OrderWebApi.Controllers
         // Get order by ID
         [HttpGet("{id:int}")]
         public IActionResult GetById(int id)
-        {
+            {
             var order = orders.FirstOrDefault(o => o.OrderId == id);
             if (order == null)
             {

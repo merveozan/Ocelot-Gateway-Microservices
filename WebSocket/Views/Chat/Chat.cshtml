@@ -1,0 +1,61 @@
+﻿namespace WebSocket.Views.Chat
+{
+@{
+    ViewData["Title"] = "Chat";
+}
+
+<h2>Chat Uygulaması</h2>
+
+<div id="loginSection">
+    <input type="text" id="usernameInput" placeholder="İsminizi girin" />
+    <button onclick="joinChat()">Sohbete Katıl</button>
+</div>
+
+<div id="chatSection" style="display:none;">
+    <p id="welcomeMessage"></p>
+    <input type="text" id="messageInput" placeholder="Mesajınızı girin" />
+    <button onclick="sendMessage()">Gönder</button>
+    <ul id="messagesList"></ul>
+</div>
+
+<script>
+    let socket;
+    let username;
+
+    // Sohbete katılımı başlatan fonksiyon
+    function joinChat() {
+        username = document.getElementById("usernameInput").value;
+
+        if (username) {
+            socket = new WebSocket("ws://" + window.location.host);
+
+            socket.onopen = function () {
+                // Sohbete katılma mesajı gönderiyoruz
+                socket.send(username + " sohbete katıldı.");
+            };
+
+            socket.onmessage = function (event) {
+                let li = document.createElement("li");
+                li.textContent = event.data;
+                document.getElementById("messagesList").appendChild(li);
+            };
+
+            document.getElementById("loginSection").style.display = 'none';
+            document.getElementById("chatSection").style.display = 'block';
+            document.getElementById("welcomeMessage").textContent = "Hoşgeldin, " + username;
+        } else {
+            alert("Lütfen isminizi girin!");
+        }
+    }
+
+    // Mesaj gönderme fonksiyonu
+    function sendMessage() {
+        let message = document.getElementById("messageInput").value;
+        if (message) {
+            socket.send(username + ": " + message);
+            document.getElementById("messageInput").value = ''; // Mesaj kutusunu temizliyoruz
+        }
+    }
+</script>
+
+}

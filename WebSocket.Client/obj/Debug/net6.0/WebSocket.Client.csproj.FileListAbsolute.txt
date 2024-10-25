@@ -1,0 +1,14 @@
+C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\WebSocket.Client\bin\Debug\net6.0\WebSocket.Client.exe
+C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\WebSocket.Client\bin\Debug\net6.0\WebSocket.Client.deps.json
+C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\WebSocket.Client\bin\Debug\net6.0\WebSocket.Client.runtimeconfig.json
+C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\WebSocket.Client\bin\Debug\net6.0\WebSocket.Client.dll
+C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\WebSocket.Client\bin\Debug\net6.0\WebSocket.Client.pdb
+C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\WebSocket.Client\obj\Debug\net6.0\WebSocket.Client.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\WebSocket.Client\obj\Debug\net6.0\WebSocket.Client.AssemblyInfoInputs.cache
+C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\WebSocket.Client\obj\Debug\net6.0\WebSocket.Client.AssemblyInfo.cs
+C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\WebSocket.Client\obj\Debug\net6.0\WebSocket.Client.csproj.CoreCompileInputs.cache
+C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\WebSocket.Client\obj\Debug\net6.0\WebSocket.Client.dll
+C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\WebSocket.Client\obj\Debug\net6.0\refint\WebSocket.Client.dll
+C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\WebSocket.Client\obj\Debug\net6.0\WebSocket.Client.pdb
+C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\WebSocket.Client\obj\Debug\net6.0\WebSocket.Client.genruntimeconfig.cache
+C:\Users\merve.ozan\source\repos\DemoMicroservicesSolution\WebSocket.Client\obj\Debug\net6.0\ref\WebSocket.Client.dll

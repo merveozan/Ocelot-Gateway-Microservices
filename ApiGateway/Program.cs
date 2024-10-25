@@ -1,6 +1,4 @@
-﻿
-
-namespace ApiGateway
+﻿namespace ApiGateway
 {
     public class Program
     {
@@ -29,4 +27,4 @@ namespace ApiGateway
                     webBuilder.UseStartup<Startup>();
                 });
     }
-}
+        }

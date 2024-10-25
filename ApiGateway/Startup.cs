@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Ocelot.Cache.CacheManager;
 using Ocelot.DependencyInjection;
@@ -28,28 +29,31 @@ namespace ApiGateway
             var key = Encoding.ASCII.GetBytes(secretKey);
 
             services.AddAuthentication(options =>
-             {
-                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-             }).AddJwtBearer("IdentityApiKey", options =>  {
-                    //options.Authority = identityUrl;
-                    options.RequireHttpsMetadata = false; 
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(key),
-                        ValidateIssuer = true,
-                        ValidIssuer = issuer,
-                        ValidateAudience = true,
-                        ValidAudience = audience,
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer("IdentityApiKey", options => {
+                //options.Authority = identityUrl;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = true,
+                    ValidIssuer = issuer,
+                    ValidateAudience = true,
+                    ValidAudience = audience,
 
-                    };
-                });
-            services.AddSignalR();
+                };
+            });
+
             services.AddOcelot()
                 .AddCacheManager(settings => settings.WithDictionaryHandle()); // Memory-based caching
 
             services.AddControllers();
+                
+
+
         }
 
         public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -58,12 +62,15 @@ namespace ApiGateway
             {
                 app.UseDeveloperExceptionPage();
             }
+           
 
             app.UseHttpsRedirection();
+            app.UseWebSockets();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseOcelot(); 
+            app.UseOcelot();
+
         }
     }
 }
