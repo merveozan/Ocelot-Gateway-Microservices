@@ -21,7 +21,7 @@ The **Ocelot Gateway Microservices** project showcases how to utilize Ocelot as 
 - **Microservices**:
   - **IdentityServerApi**: Handles user authentication and JWT token generation.
   - **ProductWebApi**: Manages product-related data.
-  - **CustomerWebApi**: Handles customer data and operations (no WebSocket support).
+  - **CustomerWebApi**: Handles customer data and operations.
   - **OrderWebApi**: Manages order-related functionalities.
 
 ## Architecture
