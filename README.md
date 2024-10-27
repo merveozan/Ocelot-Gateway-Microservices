@@ -1,7 +1,7 @@
 
 # Ocelot Gateway Microservices
 
-This project demonstrates a microservices architecture using the **Ocelot API Gateway** in .NET with comprehensive support for routing, authentication, authorization, load balancing, secure communication over HTTPS, and WebSocket handling. The API Gateway serves as a centralized entry point, streamlining management and security for various microservices within the system.
+This project demonstrates a microservices architecture using the **Ocelot API Gateway** in .NET Core with comprehensive support for routing, authentication, authorization, load balancing, secure communication over HTTPS, and WebSocket handling. The API Gateway serves as a centralized entry point, streamlining management and security for various microservices within the system.
 
 ## Overview
 
