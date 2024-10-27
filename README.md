@@ -34,7 +34,7 @@ This architecture diagram showcases how the **ApiGateway** routes requests to th
 
 ### Prerequisites
 
-1. **.NET 6 SDK** or higher.
+1. **.NET Core 6 .
 2. **Visual Studio 2022** .
 
 ### Installation
