@@ -26,7 +26,7 @@ The **Ocelot Gateway Microservices** project showcases how to utilize Ocelot as 
 
 ## Architecture
 
-![Ocelot API Gateway Architecture](Ocelot-Api-Gateway-Figure.pages)
+![Ocelot API Gateway Architecture](Ocelot-Api-Gateway-Figure.1.jpeg)
 
 This architecture diagram showcases how the **ApiGateway** routes requests to the appropriate microservices, managing both HTTP and WebSocket requests securely over HTTPS.
 
