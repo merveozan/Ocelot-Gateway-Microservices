@@ -59,15 +59,34 @@ docker-compose up -d
    - **Identity Server**: [http://localhost:7005](http://localhost:7005)
    - **WebSocket Chat App**: [http://localhost:7007](http://localhost:7007)
      
-    **NOTE**: Each service provides a Swagger UI for easy testing and exploration. For example:
-   - Product API Swagger UI: [http://localhost:7004/swagger/](http://localhost:7004/swagger/)
+  
 
 3. The services should be accessible without additional building steps since Docker Compose handles the build and setup process automatically.
 
 #### Step 3: Testing the Setup
 
-- Use Postman or a similar API client to test endpoints defined in `ocelot.json`.
-- Ensure HTTPS is enabled, and use a valid JWT token for requests requiring authorization.
+You can test all features through the **API Gateway** at `http://localhost:7000`:
+
+- **Load Balancing (CustomerWebApi)**: Send multiple requests to `/api/Customer`. Requests will be distributed across `CustomerWebApi` and `CustomerWebApi2` using the **RoundRobin** strategy.
+
+- **Rate Limiting (OrderWebApi)**: Test rate limiting by making repeated requests to `/api/Order`. After exceeding the defined request limit, you will receive a `429 Too Many Requests` response.
+
+- **Authorization (ProductWebApi)**:
+    1. Obtain a JWT token by sending credentials to **IdentityServerApi** at `/api/Auth`:
+       ```json
+       POST http://localhost:7000/api/Auth
+       {
+           "username": "your_username",
+           "password": "your_password"
+       }
+       ```
+    2. Use the retrieved token to access protected endpoints like `/api/Product`. Without a valid token, you will receive a `401 Unauthorized` response.
+
+- **Swagger UI**: Explore and test API endpoints via Swagger:
+    - Product API: [http://localhost:7004/swagger/](http://localhost:7004/swagger/)
+    - Customer API: [http://localhost:7001/swagger/](http://localhost:7001/swagger/)
+    - Order API: [http://localhost:7003/swagger/](http://localhost:7003/swagger/)
+
 
 ### Troubleshooting
 
