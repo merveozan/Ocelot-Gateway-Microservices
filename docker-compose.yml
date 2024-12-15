@@ -1,0 +1,64 @@
+services:
+  apigateway:
+    build:
+      context: ./ApiGateway
+    ports:
+      - "7000:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      
+  customerapi:
+    build:
+      context: ./Microservices/CustomerWebApi
+    ports:
+      - "7001:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  customerapi2:
+    build:
+      context: ./Microservices/CustomerWebApi2
+    ports:
+      - "7002:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  orderapi:
+    build:
+      context: ./Microservices/OrderWebApi
+    ports:
+      - "7003:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  productapi:
+    build:
+      context: ./Microservices/ProductWebApi
+    ports:
+      - "7004:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  identityserver:
+    build:
+      context: ./Microservices/IdentityServerApi
+    ports:
+      - "7005:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  websocketserver:
+    build:
+      context: ./WebSocket/Websocket.Server
+    ports:
+      - "7006:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  websocketchatapp:
+    build:
+      context: ./WebSocket/WebSocketsChatApp
+    ports:
+      - "7007:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development

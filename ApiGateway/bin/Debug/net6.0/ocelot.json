@@ -1,0 +1,164 @@
+{
+  "_comment1": "DownstreamPathTemplate => The API URL to which the request will be forwarded",
+  "_comment2": "DownstreamScheme => The protocol of the downstream API",
+  "_comment3": "DownstreamHostAndPorts => Host and Port information of the downstream API",
+  "_comment4": "UpstreamPathTemplate => The API URL through which the request will be made via the Gateway",
+  "_comment5": "UpstreamHttpMethod => The HTTP method(s) allowed for the request",
+
+  "Routes": [
+
+    {
+      "DownstreamPathTemplate": "/ws", 
+      "DownstreamScheme": "ws", 
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "websocketserver",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/ws", 
+      "UpstreamHttpMethod": [ "GET" ], 
+      "Key": "WebSocketService"
+    },
+    {
+      "DownstreamPathTemplate": "/api/Auth",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "identityserver",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Auth",
+      "UpstreamHttpMethod": [ "POST" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 20,
+        "EnableContentHashing": true
+      }
+    },
+    {
+      "_comment": "Customer Web API",
+      "DownstreamPathTemplate": "/api/Customer",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "customerapi",
+          "Port": 80
+        },
+        {
+          "Host": "customerapi2",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Customer",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "Key": "CustomerAPI"
+    },
+    {
+      "_comment": "Customer By Id",
+      "DownstreamPathTemplate": "/api/Customer/{customerId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "customerapi",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Customer/{customerId}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ],
+      "HttpHandlerOptions": {
+        "UseTracing": true
+      },
+      "Key": "CustomerByIdAPI"
+    },
+    {
+      "_comment": "Order Web API",
+      "DownstreamPathTemplate": "/api/Order/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "orderapi",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Order/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 20,
+        "EnableContentHashing": true
+      },
+      "Key": "OrderAPI",
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "PeriodTimespan": 1,
+        "Limit": 1
+      }
+    },
+    {
+      "_comment": "Product Web API",
+      "DownstreamPathTemplate": "/api/Product",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "productapi",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Product",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 20,
+        "EnableContentHashing": true
+      },
+      "Key": "ProductAPI",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "Role": "Admin"
+      }
+    },
+    {
+      "_comment": "Product By Id",
+      "DownstreamPathTemplate": "/api/Product/{productId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "productapi",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Product/{productId}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ],
+      "Key": "ProductByIdAPI"
+    }
+  ],
+  "Aggregates": [
+    {
+      "_comment": "Combine Customer and Order APIs",
+      "RouteKeys": [
+        "CustomerAPI",
+        "OrderAPI"
+      ],
+      "UpstreamPathTemplate": "/api/CustomerAndOrder",
+      "UpstreamHttpMethod": [ "GET" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:7000"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Trace",
+      "Microsoft": "Warning",
+      "Ocelot": "Trace",
+      "Ocelot.Cache": "Debug"
+    }
+  }
+}
