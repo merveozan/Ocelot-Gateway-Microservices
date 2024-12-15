@@ -4,7 +4,7 @@ This project demonstrates a microservices architecture using the Ocelot API Gate
 
 ## Overview
 
-The Ocelot Gateway Microservices project showcases how to utilize Ocelot as an API gateway to manage a suite of microservices effectively. With features like JWT-based authentication, role-based authorization, HTTPS routing, and WebSocket support, this setup provides a robust foundation for secure, scalable microservices architectures.
+The Ocelot Gateway Microservices project showcases how to utilize Ocelot as an API gateway to manage a suite of microservices effectively. With features like JWT-based authentication, role-based authorization, and WebSocket support, this setup provides a robust foundation for secure, scalable microservices architectures.
 
 ## Features
 
