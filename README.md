@@ -51,10 +51,6 @@ docker-compose up -d
 ```
 
 2. Access the application:
-
-   Each service provides a Swagger UI for easy testing and exploration. For example:
-   - Product API Swagger UI: [http://localhost:7004/swagger/](http://localhost:7004/swagger/)
-
    - **API Gateway**: [http://localhost:7000](http://localhost:7000)
    - **Customer API**: [http://localhost:7001](http://localhost:7001)
    - **Customer API 2**: [http://localhost:7002](http://localhost:7002)
@@ -62,6 +58,9 @@ docker-compose up -d
    - **Product API**: [http://localhost:7004](http://localhost:7004) 
    - **Identity Server**: [http://localhost:7005](http://localhost:7005)
    - **WebSocket Chat App**: [http://localhost:7007](http://localhost:7007)
+     
+    ***NOTE***: Each service provides a Swagger UI for easy testing and exploration. For example:
+   - Product API Swagger UI: [http://localhost:7004/swagger/](http://localhost:7004/swagger/)
 
 3. The services should be accessible without additional building steps since Docker Compose handles the build and setup process automatically.
 
