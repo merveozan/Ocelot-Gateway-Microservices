@@ -76,8 +76,8 @@ You can test all features through the **API Gateway** at `http://localhost:7000`
        ```json
        POST http://localhost:7000/api/Auth
        {
-           "username": "your_username",
-           "password": "your_password"
+           "username": "admin",
+           "password": "admin123"
        }
        ```
     2. Use the retrieved token to access protected endpoints like `/api/Product`. Without a valid token, you will receive a `401 Unauthorized` response.
