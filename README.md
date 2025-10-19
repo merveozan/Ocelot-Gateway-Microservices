@@ -58,13 +58,14 @@ docker-compose up -d
    - **Product API**: [http://localhost:7004](http://localhost:7004) 
    - **Identity Server**: [http://localhost:7005](http://localhost:7005)
    - **WebSocket Chat App**: [http://localhost:7007](http://localhost:7007)
-     
   
 
 3. The services should be accessible without additional building steps since Docker Compose handles the build and setup process automatically.
 
 #### Step 3: Testing the Setup
 
+A ready-to-use **Postman collection** is included so you can try all flows quickly.
+  
 You can test all features through the **API Gateway** at `http://localhost:7000`:
 
 - **Load Balancing (CustomerWebApi)**: Send multiple requests to `/api/Customer`. Requests will be distributed across `CustomerWebApi` and `CustomerWebApi2` using the **RoundRobin** strategy.
