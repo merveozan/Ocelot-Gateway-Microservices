@@ -1,0 +1,375 @@
+{
+	"info": {
+		"_postman_id": "523392c4-2a70-447c-a6b1-264226ae39c7",
+		"name": "OcelotApiGatewayMicroservices",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "39001072"
+	},
+	"item": [
+		{
+			"name": "CustomerWebApi",
+			"item": [
+				{
+					"name": "GetCustomers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://localhost:44314/api/Customer"
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"CustomerName\": \"John Smith\",\r\n    \"MobileNumber\": \"555-1234\",\r\n    \"Email\": \"johnsmith@example.com\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://localhost:44314/api/Customer"
+					},
+					"response": []
+				},
+				{
+					"name": "GetById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44314/api/Customer/1?Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNlcjAxIiwiUm9sZSI6IlVzZXIiLCJuYmYiOjE3MjkwNjE2NDYsImV4cCI6MTcyOTA2Mjg0NiwiaWF0IjoxNzI5MDYxNjQ2fQ.7Rn3efgfbnIaOvHqBQwtd2SEkTGHPfZDlyFmTPLDJ_o",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44314",
+							"path": [
+								"api",
+								"Customer",
+								"1"
+							],
+							"query": [
+								{
+									"key": "Authorization",
+									"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNlcjAxIiwiUm9sZSI6IlVzZXIiLCJuYmYiOjE3MjkwNjE2NDYsImV4cCI6MTcyOTA2Mjg0NiwiaWF0IjoxNzI5MDYxNjQ2fQ.7Rn3efgfbnIaOvHqBQwtd2SEkTGHPfZDlyFmTPLDJ_o"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customerId\": 3,\r\n    \"customerName\": \"David Smith\",\r\n    \"mobileNumber\": \"555-1234\",\r\n    \"email\": \"david@example.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://localhost:44314/api/Customer"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "https://localhost:44314/api/Customer/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ProductWebApi",
+			"item": [
+				{
+					"name": "GetProducts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://localhost:44329/api/Product"
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ProductName\": \"Keyboard\",\r\n    \"ProductCode\": \"KB-003\",\r\n    \"ProductPrice\": 45.99\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://localhost:44329/api/Product"
+					},
+					"response": []
+				},
+				{
+					"name": "GetById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://localhost:44329/api/Product/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productId\": 1,\r\n    \"productName\": \"Macbook\",\r\n    \"productCode\": \"MB-001\",\r\n    \"productPrice\": 3000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://localhost:44329/api/Product"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "https://localhost:44329/api/Product/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "OrderWebApi",
+			"item": [
+				{
+					"name": "GetOrders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://localhost:44338/api/Order"
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"CustomerId\": 3,\r\n    \"OrderDetails\": [\r\n        {\r\n            \"ProductId\": 104,\r\n            \"Quantity\": 3,\r\n            \"UnitPrice\": 25.00\r\n        },\r\n        {\r\n            \"ProductId\": 105,\r\n            \"Quantity\": 1,\r\n            \"UnitPrice\": 200.00\r\n        }\r\n    ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://localhost:44338/api/Order"
+					},
+					"response": []
+				},
+				{
+					"name": "GetById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://localhost:44338/api/Order/3"
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"OrderId\": 1,\r\n    \"CustomerId\": 4,\r\n    \"OrderedOn\": \"2024-10-15T10:00:00Z\",\r\n    \"OrderDetails\": [\r\n        {\r\n            \"ProductId\": 106,\r\n            \"Quantity\": 2,\r\n            \"UnitPrice\": 45.00\r\n        }\r\n    ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://localhost:44338/api/Order"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "https://localhost:44338/api/Order/3"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ApiGateway",
+			"item": [
+				{
+					"name": "GetCustomersLoadBalance",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:7000/api/Customer"
+					},
+					"response": []
+				},
+				{
+					"name": "GetCustomerAndOrderReqAggr",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:7000/api/CustomerAndOrder"
+					},
+					"response": []
+				},
+				{
+					"name": "GetProducts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsIlJvbGUiOiJBZG1pbiIsIm5iZiI6MTcyOTg1NjU1MCwiZXhwIjoxNzI5ODU3NzUwLCJpYXQiOjE3Mjk4NTY1NTAsImlzcyI6IklkZW50aXR5U2VydmVyQXBpIiwiYXVkIjoiTXlTZWN1cmVBcGkifQ.swZJ21UVrMKv7oOSP6stUC_wGRsIJqhY4t28zzE9C3g",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": "http://localhost:7000/api/Product"
+					},
+					"response": []
+				},
+				{
+					"name": "GetOrdersRateLimit",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:7000/api/Order"
+					},
+					"response": []
+				},
+				{
+					"name": "ProductUnauthorized",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:7000/api/Product"
+					},
+					"response": []
+				},
+				{
+					"name": "ProductAdminAuth",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsIlJvbGUiOiJBZG1pbiIsIm5iZiI6MTczNDI5NDA5MywiZXhwIjoxNzM0Mjk1MjkzLCJpYXQiOjE3MzQyOTQwOTMsImlzcyI6IklkZW50aXR5U2VydmVyQXBpIiwiYXVkIjoiTXlTZWN1cmVBcGkifQ.Y7GnQ_-O3awzMmZWHmpzBW4C18BsZciWNTjcKsIe0kQ",
+								"type": "text"
+							}
+						],
+						"url": "http://localhost:7000/api/Product"
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"UserName\":\"user01\",\r\n   \"Password\" :\"user01\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:7000/api/Auth"
+					},
+					"response": []
+				},
+				{
+					"name": "RequestTokenAdmin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"UserName\":\"admin\",\r\n   \"Password\" :\"admin123\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:7000/api/Auth"
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "text/plain"
+							}
+						],
+						"url": "http://localhost:7000/api/Customer"
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:7000/ws"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
